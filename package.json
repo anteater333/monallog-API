@@ -1,6 +1,6 @@
 {
   "name": "monallog-server",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "monallog's back-end server.",
   "main": "app.js",
   "dependencies": {

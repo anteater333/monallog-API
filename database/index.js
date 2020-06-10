@@ -3,10 +3,13 @@ const mongoose = require('mongoose');
 const models = require('./model');
 
 const logger = require('../logger');
+const config = require('../config');
 
 let database = {};
 
 database.connect = () => {
+    const dbInfo = config.DB_INFO[process.env.NODE_ENV];
+
     logger.info('setting database connection.');
 
     mongoose.Promise = global.Promise;
@@ -16,7 +19,7 @@ database.connect = () => {
     mongoose.set('useCreateIndex', true);
     mongoose.set('useUnifiedTopology', true);
 
-    mongoose.connect('mongodb://localhost:27017/monallogDB', {useNewUrlParser: true});
+    mongoose.connect(dbInfo.URL, {useNewUrlParser: true});
     const db = mongoose.connection;
 
     // 이벤트별 callback 설정

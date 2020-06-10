@@ -6,7 +6,7 @@ require('winston-daily-rotate-file')
 const fs = require('fs')
 
 const env = process.env.NODE_ENV || 'development'
-const logDir = "./_logs"
+const logDir = "./logs"
 
 if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir)

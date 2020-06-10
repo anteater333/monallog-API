@@ -93,3 +93,7 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+### Etc
+# local configuration
+.local/

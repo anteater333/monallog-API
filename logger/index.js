@@ -25,7 +25,7 @@ const logger = createLogger({
     level: env === 'development' ? 'debug' : 'info',
     format: format.combine(
         format.timestamp({
-            format: 'YYYY-MM-DDS HH:mm:ss'
+            format: 'YYYY-MM-DD HH:mm:ss'
         }),
         format.json()
     ),

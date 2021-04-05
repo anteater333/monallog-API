@@ -14,7 +14,7 @@ if (!fs.existsSync(logDir)) {
 
 const dailyRotateFileTransport = new transports.DailyRotateFile({
     level: 'debug',
-    filename: `${logDir}/%DATE%-monallog-server.log`,
+    filename: `${logDir}/%DATE%-monallog-api.log`,
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
     maxSize: '20m', // 20mb

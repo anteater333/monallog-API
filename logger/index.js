@@ -6,7 +6,7 @@ require('winston-daily-rotate-file')
 const fs = require('fs')
 
 const env = process.env.NODE_ENV || 'development'
-const logDir = "./_logs"
+const logDir = "./logs"
 
 if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir)
@@ -14,7 +14,7 @@ if (!fs.existsSync(logDir)) {
 
 const dailyRotateFileTransport = new transports.DailyRotateFile({
     level: 'debug',
-    filename: `${logDir}/%DATE%-monallog-server.log`,
+    filename: `${logDir}/%DATE%-monallog-api.log`,
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
     maxSize: '20m', // 20mb
@@ -25,7 +25,7 @@ const logger = createLogger({
     level: env === 'development' ? 'debug' : 'info',
     format: format.combine(
         format.timestamp({
-            format: 'YYYY-MM-DDS HH:mm:ss'
+            format: 'YYYY-MM-DD HH:mm:ss'
         }),
         format.json()
     ),

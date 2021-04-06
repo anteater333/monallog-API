@@ -1,3 +1,5 @@
+process.env.NODE_ENV = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'development';
+
 const app = require('express')();
 const server = require('http').createServer(app);
 
@@ -26,7 +28,7 @@ app.use('/', require('./api'));
 // set database connection
 database.connect();
 
-server.listen(config.PORT, () => {
+app.listen(config.PORT, '0.0.0.0', () => {
     logger.info(`listening on ${config.PORT} port!`)
 
     setTimeout(() => {

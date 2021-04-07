@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const models = require('./model');
 
-const logger = require('../logger');
+const logger = require('../logger').logger;
 const config = require('../config');
 
 let database = {};

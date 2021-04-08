@@ -49,10 +49,8 @@ exports.destroy = (req, res) => {   // DELETE /channels/:id
 };
 
 exports.create = (req, res) => {    // POST /channels
-    const name = req.body.channelName;
-    const inputData = new models.Channels({
-        channelName: name
-    });
+    const body = req.body
+    const inputData = new models.Channels(body);
 
     inputData.save()
     .then(channel => {

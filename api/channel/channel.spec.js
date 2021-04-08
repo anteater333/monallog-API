@@ -5,38 +5,9 @@ const app = require('../../app');
 const ChannelModel = require('../../database/model').Channels;
 
 setTimeout(() => {
-    describe('GET /channels', () => {
-        it('should return 200 status code', (done) => {
-            request(app)
-                .get('/channels')
-                .expect(200)
-                .end((err, res) => {
-                    if (err) throw err;
-                    done();
-                });
-        });
-    
-        it('should return array', (done) => {
-            request(app)
-                .get('/channels')
-                .expect(200)
-                .end((err, res) => {
-                    if (err) throw err;
-                    res.body.should.be.an.instanceof(Array);
-                    // res.body.should.be.an.instanceof(Array).and.have.length(3);
-                    // res.body.map((channel) => {
-                    //     channel.should.have.properties('id', 'name');
-                    //     channel.id.should.be.a.Number();
-                    //     channel.name.should.be.a.String();
-                    // });
-                    done();
-                });
-        });
-    });
-
     describe('POST /channels', () => {
         before((done) => {
-            // clear channels collection
+            // clear channels collection before testing
             ChannelModel.deleteMany({}, (err) => done(err));
         });
 
@@ -61,7 +32,7 @@ setTimeout(() => {
             }
         };
 
-        it('상태 코드 201을 반환한다. ', (done) => {
+        it('상태 코드 201을 반환한다.', (done) => {
             request(app)
                 .post('/channels')
                 .set("Content-Type", "application/json")
@@ -69,6 +40,40 @@ setTimeout(() => {
                 .expect(201)
                 .end((err, res) => {
                     if (err) throw err;
+                    done();
+                });
+        });
+    });
+
+    describe('GET /channels', () => {
+        it('상태 코드 200을 반환한다. ', (done) => {
+            request(app)
+                .get('/channels')
+                .expect(200)
+                .end((err, res) => {
+                    if (err) throw err;
+                    done();
+                });
+        });
+    
+        it('Channel 스키마에 부합한 데이터를 얻는다.', (done) => {
+            request(app)
+                .get('/channels')
+                .expect(200)
+                .end((err, res) => {
+                    if (err) throw err;
+                    res.body.should.be.an.instanceof(Array).and.have.length(1);
+
+                    res.body.map((channel) => {
+                        channel.should.have.properties('channelName', 'description', 'tags', 'favorited', 'dateCreated', 'channelOptions');
+                        channel.channelName.should.be.a.String();
+                        channel.description.should.be.a.String();
+                        channel.tags.should.be.an.Array();
+                        channel.favorited.should.be.an.Array();
+                        channel.dateCreated.should.be.a.String();
+                        channel.channelOptions.should.be.an.Object().and.have.properties('playlist', 'backgroundURL');
+                    });
+
                     done();
                 });
         });

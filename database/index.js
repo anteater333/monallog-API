@@ -13,13 +13,25 @@ database.connect = () => {
     logger.info('setting database connection.');
 
     mongoose.Promise = global.Promise;
-    
-    mongoose.set('useNewUrlParser', true);
-    mongoose.set('useFindAndModify', false);
-    mongoose.set('useCreateIndex', true);
-    mongoose.set('useUnifiedTopology', true);
 
-    mongoose.connect(dbInfo.URL, {useNewUrlParser: true});
+    // To prevent deprecated error
+    /**
+     * URL string parser를 새 버전으로 사용
+     */
+    mongoose.set('useNewUrlParser', true);
+    /**
+     * 철지난 FindAndModify 함수를 사용하지 않도록 설정
+     */
+    mongoose.set('useFindAndModify', false);
+    /**
+     * 역시 철지난 ensureIndex 대신 createIndex를 사용하도록 설정
+     */
+    mongoose.set('useCreateIndex', true);
+    /** https://mongodb.github.io/node-mongodb-native/3.3/reference/unified-topology/ */
+    mongoose.set('useUnifiedTopology', true);
+    //
+
+    mongoose.connect(dbInfo.URL);
     const db = mongoose.connection;
 
     // 이벤트별 callback 설정

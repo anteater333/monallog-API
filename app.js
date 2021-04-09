@@ -15,7 +15,7 @@ const stream = require('./logger').stream;
 const database = require('./database');
 
 /** Greetings! ****************************************/
-logger.info('monallog back-end server starts running.')
+logger.info('monallog back-end REST API server starts running.')
 /******************************************************/
 
 // set middlewares

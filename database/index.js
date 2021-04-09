@@ -31,7 +31,12 @@ database.connect = () => {
     mongoose.set('useUnifiedTopology', true);
     //
 
-    mongoose.connect(dbInfo.URL);
+    const connectionOption = {
+    /** When DB server ready */
+    //     user: dbInfo.USERNAME,
+    //     pass: dbInfo.PASSWORD
+    }
+    mongoose.connect(dbInfo.URL, connectionOption);
     const db = mongoose.connection;
 
     // 이벤트별 callback 설정

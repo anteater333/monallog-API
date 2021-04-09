@@ -16,12 +16,14 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "mocha": "^8.3.2",
+    "nodemon": "^2.0.7",
     "should": "^13.2.3",
     "supertest": "^6.1.3"
   },
   "scripts": {
     "start": "node app.js",
-    "test": "cross-env NODE_ENV=test mocha ./api/**/*.spec.js --delay --exit"
+    "start-dev": "cross-env NODE_ENV=test nodemon -L --ignore '*.spec.js'",
+    "test": "cross-env NODE_ENV=test mocha ./api/**/*.spec.js --exit"
   },
   "author": "Anteater333",
   "license": "UNLICENSED"

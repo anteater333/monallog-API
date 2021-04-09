@@ -9,9 +9,9 @@ const controller = require('./channel.controller');
 
 router.get('/', controller.index);
 
-router.get('/:id', controller.show);
+router.get('/:channelName', controller.show);
 
-router.delete('/:id', controller.destroy);
+router.delete('/:channelName', controller.destroy);
 
 router.post('/', controller.create);
 

@@ -13,8 +13,8 @@ exports.index = (req, res) => {     // GET /channels
     });
 };
 
-exports.show = (req, res) => {      // GET /channels/:id
-    models.Channels.find({channelName: req.params.id})
+exports.show = (req, res) => {      // GET /channels/:channelName
+    models.Channels.find({channelName: req.params.channelName})
     .then(docs => {
         if (docs.length === 0) { // No such channel
             return res.status(404).json({error: 'No such channel'});
@@ -31,8 +31,8 @@ exports.show = (req, res) => {      // GET /channels/:id
     });
 };
 
-exports.destroy = (req, res) => {   // DELETE /channels/:id
-    const name = req.params.id; // 문자열 정수화
+exports.destroy = (req, res) => {   // DELETE /channels/:channelName
+    const name = req.params.channelName;
     if (!name) {
         return res.status(400).json({error: 'Incorrect name'});
     }
@@ -44,7 +44,7 @@ exports.destroy = (req, res) => {   // DELETE /channels/:id
                 msg : err
             });
         }
-        return res.json(result);
+        return res.status(204).json();
     });
 };
 
@@ -64,6 +64,11 @@ exports.create = (req, res) => {    // POST /channels
     });
 };
 
+/**
+ * NOT IMPLEMENTED YET
+ * @param {} req 
+ * @param {*} res 
+ */
 exports.update = (req, res) => {
     res.json();
 };

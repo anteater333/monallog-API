@@ -9,6 +9,7 @@ const channelSchema = new mongoose.Schema({
     },
     description: {
         type: String,
+        default: ""
     },
     tags: {
         type: Array,
@@ -24,7 +25,8 @@ const channelSchema = new mongoose.Schema({
     },
     channelOptions: {
         backgroundURL: {
-            type: String
+            type: String,
+            default: ""
         },
         playlist: {
             type: Array,

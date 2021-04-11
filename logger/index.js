@@ -43,4 +43,13 @@ const logger = createLogger({
     ]
 })
 
-module.exports = logger
+/**
+ * Ref. https://blog.naver.com/PostView.nhn?blogId=dilrong&logNo=221684937267
+ */
+const stream = {
+    write: message => {
+        logger.info(message)
+    }
+}
+
+module.exports = { logger, stream }

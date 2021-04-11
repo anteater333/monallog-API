@@ -28,4 +28,7 @@ router.get('/', (req, res) => {
 /* channels */
 router.use('/channels', require('./channel'));
 
+/* users */
+router.use('/users', require('./user'));
+
 module.exports = router;

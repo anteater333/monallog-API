@@ -13,8 +13,8 @@ exports.index = (req, res) => {     // GET /channels
     });
 };
 
-exports.show = (req, res) => {      // GET /channels/:id
-    models.Channels.find({channelName: req.params.id})
+exports.show = (req, res) => {      // GET /channels/:channelName
+    models.Channels.find({channelName: req.params.channelName})
     .then(docs => {
         if (docs.length === 0) { // No such channel
             return res.status(404).json({error: 'No such channel'});
@@ -31,8 +31,8 @@ exports.show = (req, res) => {      // GET /channels/:id
     });
 };
 
-exports.destroy = (req, res) => {   // DELETE /channels/:id
-    const name = req.params.id; // 문자열 정수화
+exports.destroy = (req, res) => {   // DELETE /channels/:channelName
+    const name = req.params.channelName;
     if (!name) {
         return res.status(400).json({error: 'Incorrect name'});
     }
@@ -44,15 +44,13 @@ exports.destroy = (req, res) => {   // DELETE /channels/:id
                 msg : err
             });
         }
-        return res.json(result);
+        return res.status(204).json();
     });
 };
 
 exports.create = (req, res) => {    // POST /channels
-    const name = req.body.channelName;
-    const inputData = new models.Channels({
-        channelName: name
-    });
+    const body = req.body
+    const inputData = new models.Channels(body);
 
     inputData.save()
     .then(channel => {
@@ -66,6 +64,23 @@ exports.create = (req, res) => {    // POST /channels
     });
 };
 
-exports.update = (req, res) => {
-    res.json();
+exports.update = (req, res) => {    // PUT /channels/:channelName
+    models.Channels.findOneAndUpdate(
+        {channelName: req.params.channelName},
+        {$set: req.body}
+    )
+    .then((doc) => {
+        if (!doc) {     // doc is null (not found)
+            return res.status(404).json({error : 'No such channel'});
+        }
+        else {          // 수정 전 data 반환
+            return res.status(201).json(doc);
+        }
+    })
+    .catch((err) => {
+        return res.status(520).json({
+            error : 'Something Broken',
+            msg : err
+        })
+    })
 };

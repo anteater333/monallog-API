@@ -22,7 +22,8 @@
   },
   "scripts": {
     "start": "node app.js",
-    "start-dev": "cross-env NODE_ENV=test nodemon -L --ignore '*.spec.js'",
+    "start-dev": "cross-env NODE_ENV=development nodemon -L --ignore '*.spec.js'",
+    "start-test-dev": "cross-env NODE_ENV=test nodemon -L --ignore '*.spec.js'",
     "test": "cross-env NODE_ENV=test mocha ./api/**/*.spec.js --exit"
   },
   "author": "Anteater333",

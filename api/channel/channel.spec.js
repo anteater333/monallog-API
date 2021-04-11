@@ -2,7 +2,7 @@ const should = require('should');
 const request = require('supertest');
 
 // assume remote test server
-const app = 'http://localhost:8081'
+const app = require('../test.spec').testApp
 
 const testData = {
     channelName: "test01",
@@ -56,7 +56,7 @@ describe('GET /channels', () => {
             .expect(200)
             .end((err, res) => {
                 if (err) throw err;
-                res.body.should.be.an.instanceof(Array).and.have.length(1);
+                res.body.should.be.an.instanceof(Array);
 
                 res.body.map((channel) => {
                     channel.should.have.properties('channelName', 'description', 'tags', 'favorited', 'dateCreated', 'channelOptions');

@@ -15,6 +15,6 @@ router.delete('/:channelName', controller.destroy);
 
 router.post('/', controller.create);
 
-//router.put('/:id', controller.update); // update
+router.put('/:channelName', controller.update); // update
 
 module.exports = router;

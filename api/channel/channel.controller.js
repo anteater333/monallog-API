@@ -64,11 +64,23 @@ exports.create = (req, res) => {    // POST /channels
     });
 };
 
-/**
- * NOT IMPLEMENTED YET
- * @param {} req 
- * @param {*} res 
- */
-exports.update = (req, res) => {
-    res.json();
+exports.update = (req, res) => {    // PUT /channels/:channelName
+    models.Channels.findOneAndUpdate(
+        {channelName: req.params.channelName},
+        {$set: req.body}
+    )
+    .then((doc) => {
+        if (!doc) {     // doc is null (not found)
+            return res.status(404).json({error : 'No such channel'});
+        }
+        else {          // 수정 전 data 반환
+            return res.status(201).json(doc);
+        }
+    })
+    .catch((err) => {
+        return res.status(520).json({
+            error : 'Something Broken',
+            msg : err
+        })
+    })
 };

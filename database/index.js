@@ -7,9 +7,8 @@ const config = require('../config');
 
 let database = {};
 
+/** Database 연결 */
 database.connect = () => {
-    const dbInfo = config.DB_INFO[process.env.NODE_ENV];
-
     logger.info('setting database connection.');
 
     mongoose.Promise = global.Promise;
@@ -31,23 +30,32 @@ database.connect = () => {
     mongoose.set('useUnifiedTopology', true);
     //
 
+    /** mongoose connection options */
+    const dbInfo = config.DB_INFO[process.env.NODE_ENV];
     const connectionOption = {
-    /** When DB server ready */
+    /** When remote DB server ready */
     //     user: dbInfo.USERNAME,
     //     pass: dbInfo.PASSWORD
     }
-    mongoose.connect(dbInfo.URL, connectionOption);
+
+    mongoose.connect(dbInfo.URL, connectionOption)
+    .catch((err) => {
+        logger.error('database connection error :', err);
+    });
     const db = mongoose.connection;
 
     // 이벤트별 callback 설정
     db.on('open', () => {
         logger.info('database opened');
     });
+    db.on('reconnected', () => {
+        logger.info('database reconnected');
+    });
     db.on('disconnected', () => {
-        logger.info('database disconnected');
+        logger.error('database disconnected');
     });
     db.on('error', (err) =>{
-        logger.error(err);
+        logger.error('mongoose error :', err);
     });
 }
 

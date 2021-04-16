@@ -39,7 +39,7 @@ app.use('/', require('./api'));
 database.connect();
 
 app.listen(config.PORT, '0.0.0.0', () => {
-    logger.info(`listening on ${config.PORT} port!`)
+    logger.info(`monallog API server now listening on ${config.PORT} port!`)
 });
 
 module.exports = app;

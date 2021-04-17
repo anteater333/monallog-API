@@ -1,5 +1,6 @@
 const models = require('../../database').models;
 const logger = require('../../logger').logger;
+const mongoose = require('mongoose');
 
 /**
  * TBD : Service layer 분리
@@ -88,6 +89,9 @@ exports.create = async (req, res) => {    // POST /channels
         
         return res.status(201).json(savedChannel);
     } catch (err) {
+        if (err instanceof mongoose.Error.StrictModeError) {
+            return res.status(400).json();
+        }
         logger.error('Service Error : ', err)
         return res.status(520).json({
             error : 'Something Broken',
@@ -107,9 +111,12 @@ exports.update = async (req, res) => {    // PUT /channels/:channelName
             return res.status(404).json({error : 'No such channel'});
         }
         else {  // 수정 전 data 반환
-            return res.status(201).json(channel);
+            return res.status(200).json(channel);
         }
     } catch (err) {
+        if (err instanceof mongoose.Error.StrictModeError) {
+            return res.status(400).json();
+        }
         logger.error('Service Error : ', err)
         return res.status(520).json({
             error : 'Something Broken',

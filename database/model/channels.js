@@ -50,4 +50,7 @@ channelSchema.statics.findAll = function() {
 
 channelSchema.index({channelName: 1});
 
+// throw an error when field not in schema attempt to be saved.
+channelSchema.set("strict", "throw")
+
 module.exports = mongoose.model('Channel', channelSchema);

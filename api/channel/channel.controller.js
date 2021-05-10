@@ -90,7 +90,9 @@ exports.create = async (req, res) => {    // POST /channels
         return res.status(201).json(savedChannel);
     } catch (err) {
         if (err instanceof mongoose.Error.StrictModeError) {
-            return res.status(400).json();
+            return res.status(400).json({
+                error : 'Bad body attributes'
+            });
         }
         logger.error('Service Error : ', err)
         return res.status(520).json({
